@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import { ArticleCard } from "@/components/ArticleCard";
 import { categories, getByCategory, type Category } from "@/data/articles";
 
-export const Route = createFileRoute("/category/")({
+export const Route = createFileRoute("/category/$slug")({
   loader: ({ params }) => {
     const cat = categories.find((c) => c.slug === params.slug as Category);
     if (!cat) throw notFound();

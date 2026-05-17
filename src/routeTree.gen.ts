@@ -12,8 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CategoryRouteImport } from './routes/category.'
-import { Route as ArticleRouteImport } from './routes/article.'
+import { Route as CategorySlugRouteImport } from './routes/category.$slug'
+import { Route as ArticleSlugRouteImport } from './routes/article.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -30,14 +30,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CategoryRoute = CategoryRouteImport.update({
-  id: '/category/',
-  path: '/category/',
+const CategorySlugRoute = CategorySlugRouteImport.update({
+  id: '/category/$slug',
+  path: '/category/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ArticleRoute = ArticleRouteImport.update({
-  id: '/article/',
-  path: '/article/',
+const ArticleSlugRoute = ArticleSlugRouteImport.update({
+  id: '/article/$slug',
+  path: '/article/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -45,38 +45,49 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/article/': typeof ArticleRoute
-  '/category/': typeof CategoryRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/article': typeof ArticleRoute
-  '/category': typeof CategoryRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/article/': typeof ArticleRoute
-  '/category/': typeof CategoryRoute
+  '/article/$slug': typeof ArticleSlugRoute
+  '/category/$slug': typeof CategorySlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/search' | '/sitemap.xml' | '/article/' | '/category/'
+  fullPaths:
+    | '/'
+    | '/search'
+    | '/sitemap.xml'
+    | '/article/$slug'
+    | '/category/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/search' | '/sitemap.xml' | '/article' | '/category'
-  id: '__root__' | '/' | '/search' | '/sitemap.xml' | '/article/' | '/category/'
+  to: '/' | '/search' | '/sitemap.xml' | '/article/$slug' | '/category/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/search'
+    | '/sitemap.xml'
+    | '/article/$slug'
+    | '/category/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  ArticleRoute: typeof ArticleRoute
-  CategoryRoute: typeof CategoryRoute
+  ArticleSlugRoute: typeof ArticleSlugRoute
+  CategorySlugRoute: typeof CategorySlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -102,18 +113,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/category/': {
-      id: '/category/'
-      path: '/category'
-      fullPath: '/category/'
-      preLoaderRoute: typeof CategoryRouteImport
+    '/category/$slug': {
+      id: '/category/$slug'
+      path: '/category/$slug'
+      fullPath: '/category/$slug'
+      preLoaderRoute: typeof CategorySlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/article/': {
-      id: '/article/'
-      path: '/article'
-      fullPath: '/article/'
-      preLoaderRoute: typeof ArticleRouteImport
+    '/article/$slug': {
+      id: '/article/$slug'
+      path: '/article/$slug'
+      fullPath: '/article/$slug'
+      preLoaderRoute: typeof ArticleSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -123,8 +134,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  ArticleRoute: ArticleRoute,
-  CategoryRoute: CategoryRoute,
+  ArticleSlugRoute: ArticleSlugRoute,
+  CategorySlugRoute: CategorySlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
