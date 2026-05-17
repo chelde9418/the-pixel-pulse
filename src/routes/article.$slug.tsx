@@ -9,7 +9,7 @@ import { getArticle, getRelated } from "@/data/articles";
 import { Clock, Calendar, User } from "lucide-react";
 import { useState } from "react";
 
-export const Route = createFileRoute("/article/")({
+export const Route = createFileRoute("/article/$slug")({
   loader: ({ params }) => {
     const a = getArticle(params.slug);
     if (!a) throw notFound();
